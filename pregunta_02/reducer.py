@@ -3,10 +3,19 @@
 #
 import sys
 
-if __name__ == "__main__":
-        a=0
+if __name__ == '__main__':
+        curkey = None
+        total = 0
+
         for line in sys.stdin:
-                a= a+1
-                words= line.split(',')
-                if( len(words) >2 and a>1):
-                        sys.stdout.write("{}\t{}\n".format(words[3], words[4]))
+                key, val = line.split("\t")
+                val = int(val)
+                if key == curkey:
+                        if (val >= total):
+                                total = val
+                else:
+                        if curkey is not None:
+                                sys.stdout.write("{}\t{}\n".format(curkey, total))
+                        curkey = key
+                        total = val
+        sys.stdout.write("{}\t{}\n".format(curkey, total))
